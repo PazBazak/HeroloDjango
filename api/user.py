@@ -17,9 +17,9 @@ class CustomUserManager(BaseUserManager):
 
         # This makes sure we got everything ready for the user
         if not username:
-            raise ValueError(_(self.NO_VALUE_ERROR_MESSAGE.format('Username')))
+            raise ValueError(_(NO_VALUE_ERROR_MESSAGE.format('Username')))
         if not password:
-            raise ValueError(_(self.NO_VALUE_ERROR_MESSAGE.format('Password')))
+            raise ValueError(_(NO_VALUE_ERROR_MESSAGE.format('Password')))
 
         user = self.model(username=username, **extra_fields)
         user.set_password(password)
@@ -43,11 +43,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractUser):
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = []
-
     objects = CustomUserManager()
 
-    # preventing circular import error
     messages = models.ManyToManyField("api.Message", blank=True)
 
