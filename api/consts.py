@@ -15,7 +15,7 @@ DATE_FORMAT = "%a %B %d, %Y"
 MESSAGE_LENGTH = 512
 SUBJECT_LENGTH = 128
 
-MESSAGE_DISPLAY = "{} to {} - {}"
+MESSAGE_DISPLAY = "{} to {}"
 
 
 # endregion
@@ -37,6 +37,19 @@ ALL_FIELDS = '__all__'
 ID_FIELD = 'id'
 USERNAME_FIELD = 'username'
 MESSAGES_FIELD = 'messages'
+PASSWORD_FIELD = 'password'
+SENDER_FIELD = 'sender'
+RECEIVER_FIELD = 'receiver'
+SUBJECT_FIELDS = 'subject'
+
+
+# endregion
+
+
+# region views
+
+
+CREATE = 'create'
 
 
 # endregion
