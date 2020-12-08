@@ -98,10 +98,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'api.CustomUser'
+
+
 # rest framework
-REST_FRAMEWORK = {
-    "DATE_INPUT_FORMATS": ["%d-%m-%Y"],
-}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
