@@ -50,6 +50,9 @@ SUBJECT_FIELDS = 'subject'
 
 
 CREATE = 'create'
+REGISTER = 'register'
+RETRIEVE = 'retrieve'
+LIST = 'list'
 
 
 # endregion
