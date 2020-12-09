@@ -42,7 +42,7 @@ SENDER_FIELD = 'sender'
 RECEIVER_FIELD = 'receiver'
 SUBJECT_FIELD = 'subject'
 DATE_FIELD = 'creation_data'
-
+IS_READ_FIELD = 'is_read'
 
 # endregion
 
