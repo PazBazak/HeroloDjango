@@ -54,6 +54,7 @@ CREATE = 'create'
 REGISTER = 'register'
 RETRIEVE = 'retrieve'
 LIST = 'list'
+POST = 'post'
 
 
 # endregion

@@ -97,7 +97,8 @@ class MessageViewSet(viewsets.ModelViewSet):
         user = get_user_from_token(request.auth.key)
 
         # handles QueryDict
-        request.data._mutable = True if type(request.data) is not dict else None
+        if type(request.data) is not dict:
+            request.data._mutable = True
 
         # adding the sender to the data
         data[SENDER_FIELD] = user.id
@@ -131,7 +132,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         return Response(status=status.HTTP_403_FORBIDDEN)
 
-    @action(detail=False, methods=['post'])
+    @action(detail=False, methods=[POST])
     def register(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
