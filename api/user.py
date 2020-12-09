@@ -45,5 +45,3 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
-    messages = models.ManyToManyField("api.Message", blank=True)
-
