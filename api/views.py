@@ -10,17 +10,30 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.db.models import Q
+from rest_framework.request import Request
 
 
 # region utils
 
-def filter_sender_receiver(username):
+def filter_sender_receiver(username: str):
     """
     Returns the queryset filter for message if the username is in either sender or receiver
     :param username: username
     :return: filter queryset
     """
     return Q(sender__username=username) | Q(receiver__username=username)
+
+
+def get_user_from_token(token: str):
+    """
+    :param token: Given token key
+    :return: user which attached to that token
+    """
+    request_token = token
+    token = Token.objects.get(key=request_token)
+
+    user = token.user
+    return user
 
 # endregion
 
@@ -55,10 +68,7 @@ class MessageViewSet(viewsets.ModelViewSet):
         When fetching single message, it will return the message only if the logged user is eiter the sender or the
         receiver, and if the receiver fetched the message, it will be changed to read!
         """
-        request_token = request.auth.key
-        token = Token.objects.get(key=request_token)
-
-        user = token.user
+        user = get_user_from_token(request.auth.key)
         logged_username = user.username
 
         instance = self.get_object()
@@ -75,6 +85,29 @@ class MessageViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+    def create(self, request, *args, **kwargs):
+        """
+        When writing a new message, the required parameters will be receiver, message, subject
+        sender will be taken from the logged user.
+        date is auto now.
+        is read default is false
+        """
+        data = request.data
+        user = get_user_from_token(request.auth.key)
+
+        # handles QueryDict
+        if type(request.data) is not dict:
+            request.data._mutable = True
+
+        # adding the sender to the data
+        data[SENDER_FIELD] = user.id
+
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -99,7 +132,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         return Response(status=status.HTTP_403_FORBIDDEN)
 
-    @action(detail=False, methods=['post'])
+    @action(detail=False, methods=[POST])
     def register(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
