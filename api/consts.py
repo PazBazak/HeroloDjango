@@ -40,7 +40,8 @@ MESSAGES_FIELD = 'messages'
 PASSWORD_FIELD = 'password'
 SENDER_FIELD = 'sender'
 RECEIVER_FIELD = 'receiver'
-SUBJECT_FIELDS = 'subject'
+SUBJECT_FIELD = 'subject'
+DATE_FIELD = 'creation_data'
 
 
 # endregion
