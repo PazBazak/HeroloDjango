@@ -7,8 +7,6 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.conf import settings
 
-# Create your models here.
-
 
 class Message(models.Model):
     sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='senders')
@@ -16,6 +14,7 @@ class Message(models.Model):
     message = models.CharField(max_length=MESSAGE_LENGTH)
     subject = models.CharField(max_length=SUBJECT_LENGTH)
     creation_data = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
 
     def __str__(self):
         return MESSAGE_DISPLAY.format(self.sender, self.receiver)

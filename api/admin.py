@@ -7,7 +7,7 @@ from .user import CustomUser
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "creation_data", "message")
+    list_display = ("__str__", "creation_data", "message", "id")
 
 
 @admin.register(CustomUser)
