@@ -22,6 +22,9 @@ class Message(models.Model):
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
+    """
+    Django signal to create a token each time a user model is created.
+    """
     if created:
         Token.objects.create(user=instance)
 

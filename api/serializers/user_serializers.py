@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from api.consts import *
-from api.models import Message
 from api.user import CustomUser
 
 

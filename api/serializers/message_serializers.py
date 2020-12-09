@@ -2,7 +2,6 @@ from rest_framework import serializers
 from api.consts import *
 from api.models import Message
 from api.serializers.user_serializers import UserMessageDisplaySerializer
-from api.user import CustomUser
 
 
 class MessageCreateSerializer(serializers.ModelSerializer):
@@ -22,6 +21,9 @@ class MessageDisplaySerializer(serializers.ModelSerializer):
     creation_data = serializers.SerializerMethodField()
 
     def get_creation_data(self, obj):
+        """
+        Used in order to format the date when displaying!
+        """
         return obj.creation_data.strftime(DATE_FORMAT)
 
 
@@ -36,5 +38,8 @@ class MessageFullDisplaySerializer(serializers.ModelSerializer):
     creation_data = serializers.SerializerMethodField()
 
     def get_creation_data(self, obj):
+        """
+        Used in order to format the date when displaying!
+        """
         return obj.creation_data.strftime(DATE_FORMAT)
 

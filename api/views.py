@@ -10,7 +10,6 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.db.models import Q
-from rest_framework.request import Request
 
 
 # region utils
@@ -49,6 +48,9 @@ class MessageViewSet(viewsets.ModelViewSet):
         return MessageDisplaySerializer
 
     def destroy(self, request, *args, **kwargs):
+        """
+        When destroying a record, verifying the logged user is either the sender or receiver in order to do so!
+        """
         request_token = request.auth.key
         sender = self.get_object().sender
         receiver = self.get_object().receiver
@@ -132,6 +134,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=[POST])
     def register(self, request, *args, **kwargs):
+        """
+        Creating a new user, overrides default create
+        """
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)

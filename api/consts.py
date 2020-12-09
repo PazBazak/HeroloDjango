@@ -4,6 +4,7 @@
 
 
 DATE_FORMAT = "%a %B %d, %Y"
+JSON = 'json'
 
 
 # endregion
@@ -36,7 +37,7 @@ NO_VALUE_ERROR_MESSAGE = 'The {} must be set'
 ALL_FIELDS = '__all__'
 ID_FIELD = 'id'
 USERNAME_FIELD = 'username'
-MESSAGES_FIELD = 'messages'
+MESSAGES_FIELD = 'message'
 PASSWORD_FIELD = 'password'
 SENDER_FIELD = 'sender'
 RECEIVER_FIELD = 'receiver'
@@ -58,3 +59,15 @@ POST = 'post'
 
 
 # endregion
+
+
+# region tests
+
+
+API_PATH = '/api/'
+
+REGISTER_PATH = API_PATH + 'users/register/'
+
+
+# endregion
+
