@@ -21,6 +21,21 @@ class MessageViewSet(viewsets.ModelViewSet):
             return MessageCreateSerializer 
         return MessageDisplaySerializer
 
+    def destroy(self, request, *args, **kwargs):
+        request_token = request.auth.key
+        sender = self.get_object().sender
+        receiver = self.get_object().receiver
+
+        users_tokens = Token.objects.filter(user__in=[sender, receiver])
+
+        for token in users_tokens:
+            if token.key == request_token:
+                instance = self.get_object()
+                self.perform_destroy(instance)
+                return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
