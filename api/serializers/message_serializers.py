@@ -2,6 +2,7 @@ from rest_framework import serializers
 from api.consts import *
 from api.models import Message
 from api.serializers.user_serializers import UserMessageDisplaySerializer
+from api.user import CustomUser
 
 
 class MessageCreateSerializer(serializers.ModelSerializer):
