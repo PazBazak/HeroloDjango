@@ -16,6 +16,20 @@ class MessageDisplaySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
+        fields = (ID_FIELD, SENDER_FIELD, RECEIVER_FIELD, DATE_FIELD)
+
+    creation_data = serializers.SerializerMethodField()
+
+    def get_creation_data(self, obj):
+        return obj.creation_data.strftime(DATE_FORMAT)
+
+
+class MessageFullDisplaySerializer(serializers.ModelSerializer):
+    sender = UserMessageDisplaySerializer(many=False)
+    receiver = UserMessageDisplaySerializer(many=False)
+
+    class Meta:
+        model = Message
         fields = ALL_FIELDS
 
     creation_data = serializers.SerializerMethodField()
