@@ -2,7 +2,7 @@ from .consts import *
 from rest_framework import viewsets, status
 from .models import Message
 from .user import CustomUser
-from api.serializers.user_serializers import UserCreateSerializer, UserDisplayDetailSerializer, UserDisplaySerializer
+from api.serializers.user_serializers import UserCreateSerializer, UserDisplaySerializer
 from api.serializers.message_serializers import MessageDisplaySerializer, MessageCreateSerializer, \
     MessageFullDisplaySerializer
 from rest_framework.decorators import action
@@ -124,8 +124,6 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == REGISTER:
             return UserCreateSerializer
-        elif self.action == RETRIEVE:
-            return UserDisplayDetailSerializer
         return UserDisplaySerializer
 
     # use register for creating new instances

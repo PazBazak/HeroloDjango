@@ -10,22 +10,6 @@ class UserMessageDisplaySerializer(serializers.ModelSerializer):
         fields = (ID_FIELD, USERNAME_FIELD)
 
 
-class UserDisplayDetailSerializer(serializers.ModelSerializer):
-    class MessageUserDisplaySerializer(serializers.ModelSerializer):
-        sender = UserMessageDisplaySerializer(many=False)
-        receiver = UserMessageDisplaySerializer(many=False)
-
-        class Meta:
-            model = Message
-            fields = ALL_FIELDS
-
-    messages = MessageUserDisplaySerializer(many=True)
-
-    class Meta:
-        model = CustomUser
-        fields = [ID_FIELD, USERNAME_FIELD, MESSAGES_FIELD]
-
-
 class UserDisplaySerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
