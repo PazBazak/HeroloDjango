@@ -4,6 +4,7 @@
 
 
 DATE_FORMAT = "%a %B %d, %Y"
+JSON = 'json'
 
 
 # endregion
@@ -58,3 +59,15 @@ POST = 'post'
 
 
 # endregion
+
+
+# region tests
+
+
+API_PATH = '/api/'
+
+REGISTER_PATH = API_PATH + 'users/register/'
+
+
+# endregion
+

@@ -1,8 +1,14 @@
 from django.test import TestCase
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
 from .models import Message, CustomUser
 from .consts import *
 from api.serializers.message_serializers import MessageCreateSerializer, MessageFullDisplaySerializer
+from rest_framework import status
+
+"""
+Some basic tests
+"""
+
 
 # region model testing
 
@@ -79,6 +85,33 @@ class MessageSerializersTests(APITestCase):
         self.assertEqual(False, message_data[IS_READ_FIELD])
         self.assertEqual('SENDER', message_data[SENDER_FIELD][USERNAME_FIELD])
         self.assertEqual('RECEIVER', message_data[RECEIVER_FIELD][USERNAME_FIELD])
+
+
+# endregion
+
+
+# region view sets testing
+
+
+class UserViewSetTests(APITestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.client = APIClient()
+
+    def test_register(self):
+        user_data = {USERNAME_FIELD: 'NEW_USER', PASSWORD_FIELD: 'PASSWORD'}
+
+        response = self.client.post(REGISTER_PATH, user_data, format=JSON)
+
+        # Checks that got correct status
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # Checks the user created with the correct data
+        self.assertEqual(response.data[USERNAME_FIELD], 'NEW_USER')
+
+        # Checks that there's a token returned
+        self.assertTrue('token' in response.data)
 
 
 # endregion
