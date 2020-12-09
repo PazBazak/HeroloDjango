@@ -2,4 +2,4 @@ djangorestframework
 django==3.1.4
 django-heroku
 python-decouple
-
+gunicorn

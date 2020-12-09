@@ -1,1 +1,1 @@
-web: gunicorn HeroloDjango.wsgi
+web: gunicorn HeroloDjango.wsgi --log-file -
